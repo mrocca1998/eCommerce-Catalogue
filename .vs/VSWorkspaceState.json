@@ -1,10 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\config",
     "\\controllers",
+    "\\migrations",
+    "\\models",
     "\\routes",
     "\\views"
   ],
-  "SelectedNode": "\\views\\landing.pug",
+  "SelectedNode": "\\migrations",
   "PreviewInSolutionExplorer": false
 }
