@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\controllers",
     "\\routes",
     "\\views"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\views\\landing.pug",
   "PreviewInSolutionExplorer": false
 }
