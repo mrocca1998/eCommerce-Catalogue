@@ -1,0 +1,33 @@
+doctype html
+html(lang='en')
+  include ../common/header.pug
+  +header("Albanians")
+  body
+    header
+      include ../common/navbar.pug
+      +navbar()
+      .container
+        .row.align-items-center
+          .col-md-6.order-md-1.text-center.text-md-left.pr-md-5
+            h1 Albanians
+            table.table
+                thead
+                    tr
+                    th(scope="col") Email
+                    th(scope="col") Edit
+                    th(scope="col") Delete
+                    tr
+                tbody                
+                    tr(id=Albanian.id)
+                        td
+                          span #{Albanian.email}
+                        td
+                          a(href="/Albanian/" + Albanian.id + '/edit') Edit
+                        td 
+                         form(action='/Albanian/' + Albanian.id + '/delete', method="POST")
+                           button(type='submit') Delete
+
+          
+    include ../common/footer.pug
+    +footer()
+    script(src='/javascripts/Albanians.js')

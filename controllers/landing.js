@@ -14,7 +14,7 @@ exports.submit_Albanian = function (req, res, next) {
 
 exports.show_Albanians = function (req, res, next) {
     return models.Albanian.findAll().then(Albanians => {
-        res.render('landing', { title: 'Albania', Albanians: Albanians });
+        res.render('albanian/albanians', { title: 'Albania', Albanians: Albanians });
     })
 
 }
@@ -25,7 +25,7 @@ exports.show_Albanian = function (req, res, next) {
             id : req.params.Albanian_id
         }
     }).then(Albanian => {
-        res.render('Albanian', { Albanian: Albanian });
+        res.render('albanian/albanian', { Albanian: Albanian });
     });
 }
 
