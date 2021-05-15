@@ -1,6 +1,7 @@
 {
   "ExpandedNodes": [
     "",
+    "\\bin",
     "\\config",
     "\\controllers",
     "\\migrations",
@@ -8,6 +9,6 @@
     "\\routes",
     "\\views"
   ],
-  "SelectedNode": "\\migrations",
+  "SelectedNode": "\\app.js",
   "PreviewInSolutionExplorer": false
 }
