@@ -1,14 +1,14 @@
-function deleteLead(leadId) {
+function deleteAlbanian(AlbanianId) {
     $.ajax({
-        url: '/lead/' + leadId + '/delete-json',
+        url: '/Albanian/' + AlbanianId + '/delete-json',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        data: JSON.stringify({ leadId }),
+        data: JSON.stringify({ AlbanianId }),
         type: 'POST',
         success: ((res) => {
             // Replace follow button with unfollow.
             console.log("Result: ", res)
-            $("#" + leadId).remove();
+            $("#" + AlbanianId).remove();
         }),
         error: ((error) => {
             console.log("Error:", error);

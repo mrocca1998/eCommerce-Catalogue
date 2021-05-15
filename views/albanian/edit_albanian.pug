@@ -1,0 +1,6 @@
+extends ../layout
+
+block content
+  form(action="/Albanian/" + Albanian.id + "/edit", method="POST")
+    input(name="Albanian_email", type="email", placeholder="Enter your email address", value=Albanian.email)
+    button(type="submit") Save
