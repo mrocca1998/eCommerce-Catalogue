@@ -39,10 +39,20 @@ exports.delete_Query = function (req, res, next) {
     })
 }
 
-exports.delete_Queries = function (req, res, next) {
-    return models.Query.destroy({
-        where: {
-        },
-        truncate: true
+exports.get_User = function (req, res, next) {
+    return models.User.findOne().then(user => {
+        res.json(user);
+    })
+}
+
+exports.submit_User = function (req, res, next) {
+    return models.User.create({
+        email: req.body.email,
+    })
+}
+
+exports.edit_User = function (req, res, next) {
+    return models.User.update({
+        email:req.body.email
     })
 }

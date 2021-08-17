@@ -2,6 +2,87 @@ import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState, Component} from 'react';
 
+class ContactInfo extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+        email: this.props.user.email,
+        isEditing: this.props.user,
+        userExists: this.props.user
+    }
+    this.postQuery = this.postQuery.bind(this)
+  }
+
+  changeHandler = (event) => {
+      this.setState({[event.target.name]: event.target.value})
+  }
+            
+  async postUser(event) {
+    event.preventDefault();
+    try {
+        fetch('http://localhost:3000/User', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-type':'application/json',
+            },
+            body: JSON.stringify({
+              email: this.state.email
+            })
+        })
+        .then(this.props.refreshState(), this.setState({userExists: true}))
+    } catch (e) {
+        console.log(e)
+    }
+  }
+
+  async pustUser(event) {
+    event.preventDefault();
+    try {
+        fetch('http://localhost:3000/User/edit', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-type':'application/json',
+            },
+            body: JSON.stringify({
+              email: this.state.email
+            })
+        })
+        .then(this.props.refreshState())
+    } catch (e) {
+        console.log(e)
+    }
+  }
+
+  render() {
+    return(
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-md-6 order-md-1 text-center text-md-left pr-md-5">
+                  {this.state.isEditing ?
+                    <div>
+                      <h3>Enter Contact Info</h3>
+                      <form onSubmit = {this.state.userExists ? this.putUser : this.postUser}>
+                          <div class="input-group mb-3">
+                            <input type = "email" class = "form-control" autoComplete = "off" name = 'email' value = {this.state.text} placeholder = 'Enter your email' onChange = {this.changeHandler} required/>
+                            <div class="input-group-append"><button class="btn btn-primary" type="submit">Save</button></div>
+                            <div class="input-group-append"><button class="btn btn-primary" onClick = {() => {this.setState({isEditing : !this.state.isEditing})}}>Cancel</button></div>
+                          </div>
+                      </form>
+                    </div>
+                    :
+                    <div>
+                      <h5>Current email: {this.state.email}</h5><button onClick = {() => {this.setState({isEditing : !this.state.isEditing})}}>Edit</button>
+                    </div>  
+                  }
+              </div>
+          </div>
+      </div>
+    )
+  }
+}
+
 const Queries = (props) => {
   return (
     <div class="container">
@@ -147,7 +228,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      queries: []
+      queries: [],
+      user: ""
     }
     this.getQueries = this.getQueries.bind(this)
     this.refreshState = this.refreshState.bind(this)
@@ -161,8 +243,17 @@ class App extends Component {
     },
   )}
 
+  async getUser() {
+    await fetch('http://localhost:3000/User')
+    .then(res => res.json())
+    .then(json => {
+      this.setState({ user: json })
+    },
+  )}
+
   refreshState() {
     this.getQueries();
+    this.getUser();
   }
 
   componentDidMount() {
@@ -173,7 +264,7 @@ class App extends Component {
     return (
       <div className="App">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"></link>
-        {/* < ContactInfo /> */}
+        < ContactInfo user = {this.state.user}/>
         {this.state.queries.length > 0 &&
           < Queries queries = {this.state.queries} refreshState = {this.refreshState}/>
         }
