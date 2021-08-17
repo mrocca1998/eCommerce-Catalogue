@@ -8,4 +8,6 @@ router.post('/Query', landing.submit_Query)
 router.get('/Queries', landing.get_Queries)
 router.post('/Query/:id/edit', landing.edit_Query);
 router.post('/Query/:id/delete', landing.delete_Query);
+router.post('/Queries/delete', landing.delete_Queries);
+
 module.exports = router;

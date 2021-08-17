@@ -18,7 +18,7 @@ const Queries = (props) => {
                       <tr></tr>
                   </thead>
                   <tbody>
-                    {props.queries.map(query => <Query query = {query} />)}
+                    {props.queries.map(query => <Query query = {query} refreshState = {props.refreshState} />)}
                   </tbody>
               </table>
           </div>
@@ -27,29 +27,58 @@ const Queries = (props) => {
   )
 }
 
-const Query = (props) => {
-  const buttonStyle = {
+class Query extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isEditing: false
+    }
+    this.deleteQuery = this.deleteQuery.bind(this)
+  }
+
+  buttonStyle = {
     borderRadius : '5px',
     borderWidth: '1px',
     textAlign: 'center',
     backgroundColor: 'azure',
   }
 
-  //const [isEditing, setIsEditing] = useState(0);
+  toggleIsEditing = () => {
+    this.setState({
+      isEditing: !this.state.isEditing
+    })
+  }
 
-  return (
-      // isEditing ? <tr><QueryForm/></tr> :
-        <tr>
-          <td><span>{props.query.text}</span></td>
-          <td>{props.query.quantity}</td>
-          <td>
-            <button style = {buttonStyle} >Edit</button>
-          </td>
-          <td>
-              <button style = {buttonStyle}>Delete</button>
-          </td> 
-        </tr>
-  )
+  async deleteQuery() {
+    try { await fetch('http://localhost:3000/Query/' + this.props.query.id + '/delete', {
+      method: 'post',
+      headers: {
+          'Accept': 'application/json',
+          'Content-type':'application/json',
+      }
+    })
+    .then(this.props.refreshState())
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //const [isEditing, setIsEditing] = useState(0);
+  render() {
+    return (
+        this.state.isEditing ? <tr><QueryForm/></tr> :
+          <tr>
+            <td><span>{this.props.query.text}</span></td>
+            <td>{this.props.query.quantity}</td>
+            <td>
+              <button style = {this.buttonStyle} onClick = {this.toggleIsEditing} >Edit</button>
+            </td>
+            <td>
+                <button style = {this.buttonStyle} onClick = {this.deleteQuery} >Delete</button>
+            </td> 
+          </tr>
+    )
+  }
 }
 
 class QueryForm extends Component {
@@ -145,7 +174,7 @@ class App extends Component {
       <div className="App">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"></link>
         {/* < ContactInfo /> */}
-        < Queries queries = {this.state.queries}/>
+        < Queries queries = {this.state.queries} refreshState = {this.refreshState}/>
         < QueryForm refreshState = {this.refreshState} />
       </div>
     );

@@ -38,3 +38,11 @@ exports.delete_Query = function (req, res, next) {
         }
     })
 }
+
+exports.delete_Queries = function (req, res, next) {
+    return models.Query.destroy({
+        where: {
+        },
+        truncate: true
+    })
+}
