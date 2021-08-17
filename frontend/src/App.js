@@ -1,10 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import {useEffect, useState, Component} from 'react';
 
+const Queries = (props) => {
+  return (
+    props.queries.map(query => <Query query = {query} />)
+  )
+}
 
+const Query = (props => {
+  return (
+    <p>{props.query.text}</p>
+  )
+})
 
-class QueryForm extends React.Component {
+class QueryForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -12,28 +22,12 @@ class QueryForm extends React.Component {
         quantity: 0,
     }
     this.postQuery = this.postQuery.bind(this)
-    this.get = this.get.bind(this)
   }
 
   changeHandler = (event) => {
       this.setState({[event.target.name]: event.target.value})
   }
-
-  async get(event) {
-    event.preventDefault();
-    await fetch('http://localhost:3000/Queries')
-    .then(res => res.json())
-    .then(json => {
-        this.setState({
             
-            });
-      },
-    )   
-  }
-            
-    
-
-
   async postQuery(event) {
     event.preventDefault();
     try {
@@ -82,15 +76,37 @@ class QueryForm extends React.Component {
   }
 }
 
-function App() {
-  return (
-    <div className="App">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"></link>
-      {/* < ContactInfo /> */}
-      {/* < Queries/> */}
-      < QueryForm/>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      queries: []
+    }
+    this.getQueries = this.getQueries.bind(this)
+  }
+  
+  async getQueries() {
+    await fetch('http://localhost:3000/Queries')
+    .then(res => res.json())
+    .then(json => {
+      this.setState({ queries: json })
+    },
+  )}
+
+  componentDidMount() {
+    this.getQueries();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"></link>
+        {/* < ContactInfo /> */}
+        < Queries queries = {this.state.queries}/>
+        < QueryForm/>
+      </div>
+    );
+  }
 }
 
 export default App;
