@@ -2,7 +2,7 @@
 
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    var Albanian = sequelize.define('Albanian', {
+    var Query = sequelize.define('Query', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -10,11 +10,18 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        email: {
+        text: {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        quantity: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        isEditing: {
+            type: DataTypes.STRING,
+        }
     });
 
-    return Albanian;
+    return Query;
 };

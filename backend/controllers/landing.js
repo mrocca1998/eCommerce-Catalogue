@@ -1,74 +1,40 @@
 const models = require('../models')
 
 exports.get_landing = function (req, res, next) {
-    res.render('landing', { title: 'Albania' });
+        res.render('landing', { queries: models.Query.findAll() });
 }
 
-exports.submit_Albanian = function (req, res, next) {
-    return models.Albanian.create({
-        email: req.body.Albanian_email
-    }).then(Albanian => {
-        res.redirect('/Albanians')
+exports.submit_Query = function (req, res, next) {
+    return models.Query.create({
+        text: req.body.text,
+        quantity: req.body.quantity
     })
 }
 
-exports.show_Albanians = function (req, res, next) {
-    return models.Albanian.findAll().then(Albanians => {
-        res.render('albanian/albanians', { title: 'Albania', Albanians: Albanians });
-    })
-
-}
-
-exports.show_Albanian = function (req, res, next) {
-    return models.Albanian.findOne({
-        where: {
-            id : req.params.Albanian_id
-        }
-    }).then(Albanian => {
-        res.render('albanian/albanian', { Albanian: Albanian });
-    });
-}
-
-exports.show_edit_Albanian = function (req, res, next) {
-    return models.Albanian.findOne({
-        where: {
-            id: req.params.Albanian_id
-        }
-    }).then(Albanian => {
-        res.render('Albanian/edit_Albanian', { Albanian: Albanian });
-    });
-}
-
-exports.edit_Albanian = function (req, res, next) {
-    req.params.Albanian_id
-    req.body.Albanian_email
-    return models.Albanian.update({
-        email:req.body.Albanian_email
-    }, {
-        where: {
-            id:req.params.Albanian_id
-        }
-    }).then(result => {
-        res.redirect('/Albanian/' + req.params.Albanian_id)
+exports.get_Queries = function (req, res, next) {
+    return models.Query.findAll().then(queries => {
+        res.json(queries);
     })
 }
 
-exports.delete_Albanian = function (req, res, next) {
-    return models.Albanian.destroy({
+exports.edit_Query = function (req, res, next) {
+    req.params.id
+    req.body.text
+    req.body.quantity
+    return models.Query.update({
+        text: req.body.text,
+        quantity: req.body.quantity    
+        }, {
         where: {
-            id: req.params.Albanian_id
+            id:req.params.id
         }
-    }).then(result => {
-        res.redirect('/Albanians')
     })
 }
 
-exports.delete_Albanian_json = function (req, res, next) {
-    return models.Albanian.destroy({
+exports.delete_Query = function (req, res, next) {
+    return models.Query.destroy({
         where: {
-            id: req.params.Albanian_id
+            id: req.params.id
         }
-    }).then(result => {
-        res.send({ msg : 'Success'})
     })
 }
