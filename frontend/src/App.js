@@ -174,7 +174,9 @@ class App extends Component {
       <div className="App">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"></link>
         {/* < ContactInfo /> */}
-        < Queries queries = {this.state.queries} refreshState = {this.refreshState}/>
+        {this.state.queries.length > 0 &&
+          < Queries queries = {this.state.queries} refreshState = {this.refreshState}/>
+        }
         < QueryForm refreshState = {this.refreshState} />
       </div>
     );
