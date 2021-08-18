@@ -53,6 +53,10 @@ exports.submit_User = function (req, res, next) {
 
 exports.edit_User = function (req, res, next) {
     return models.User.update({
-        email:req.body.email
+        email: req.body.email
+    }, {
+        where: {
+            id: req.params.id
+        }
     })
 }

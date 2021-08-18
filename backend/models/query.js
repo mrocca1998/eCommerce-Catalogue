@@ -18,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        isEditing: {
-            type: DataTypes.STRING,
-        }
     });
 
     return Query;
