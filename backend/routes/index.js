@@ -11,5 +11,7 @@ router.post('/Query/:id/delete', landing.delete_Query);
 router.post('/User', landing.submit_User);
 router.post('/User/:id/edit', landing.edit_User);
 router.get('/User', landing.get_User)
+router.get('/Send', landing.send_newsletter);
+
 
 module.exports = router;
