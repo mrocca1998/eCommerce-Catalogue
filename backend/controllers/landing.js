@@ -1,8 +1,22 @@
 const models = require('../models')
-const nodemailer = require("nodemailer");
+let newsletter = require('../controllers/newsletter')
+var cron = require('node-cron');
+
+getDate = () => {
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    return year + '.' + month + '.' + day;
+}
 
 exports.get_landing = function (req, res, next) {
     res.render('landing', { queries: models.Query.findAll() });
+    // cron.schedule('* * 12 * 6', () => {
+    //     models.User.findOne().then(user => {
+    //         send_newsletter(user, getDate())
+    //     })
+    // });
 }
 
 exports.submit_Query = function (req, res, next) {
@@ -63,31 +77,11 @@ exports.edit_User = function (req, res, next) {
 }
 
 exports.send_newsletter = function (req, res, next) {
-    let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: {
-          user: "ecommercethrowaway@gmail.com",
-          pass: "eCommerce!", 
-        },
-    });
-    transporter.sendMail({
-        from: 'ecommercethrowaway@gmail.com',
-        to: 'mrocca1998@gmail.com',
-        subject: 'eCommerce Newsletter',
-        text: 'Attached is your custom newsletter. Happy shopping!',
-        attachments: [{
-            filename: 'newsletter.pdf',
-            path: 'C:/Users/mrocc/Downloads/test.pdf',
-            contentType: 'application/pdf'
-        }],
-        function(err, info) {
-          if (err) {
-            console.error(err);
-          } else {
-            console.log(info);
-          }
-        }
-      });
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    date = year + '.' + month + '.' + day;
+
+    newsletter.generateNewsletter(req.params.user, getDate());
 }
