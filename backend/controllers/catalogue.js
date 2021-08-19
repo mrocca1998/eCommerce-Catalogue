@@ -3,7 +3,7 @@ const html_to_pdf = require('html-pdf-node');
 const models = require('../models');
 const SerpApi = require('google-search-results-nodejs')
 
-exports.generateNewsletter = async function (user, date) {
+exports.generateCatalogue = async function (user, date) {
   let search = new SerpApi.GoogleSearch("enter key here")
   models.Query.findAll().then(queries => {
     let html = '<div style="text-align: center; font-family: Arial"><h1>HAPPY SHOPPING!</h1>'
@@ -38,7 +38,7 @@ exports.generateNewsletter = async function (user, date) {
 async function generatePDF(user, date, html) {
   let file = { content: html, };
   console.log(html)
-  let options = { path: './newsletters/' + user + date + '.pdf'}
+  let options = { path: './catalogues/' + user + date + '.pdf'}
 
   try {
       await html_to_pdf.generatePdf(file, options)
@@ -61,11 +61,11 @@ function sendEmail(user, date) {
     transporter.sendMail({
         from: 'ecommercethrowaway@gmail.com',
         to: user,
-        subject: 'eCommerce Newsletter',
-        text: 'Attached is your custom newsletter. Happy shopping!',
+        subject: 'eCommerce Catalogue',
+        text: 'Attached is your custom catalogue. Happy shopping!',
         attachments: [{
-            filename: date + 'newsletter.pdf',
-            path: './newsletters/'+ user + date + '.pdf',
+            filename: date + 'catalogue.pdf',
+            path: './catalogues/'+ user + date + '.pdf',
             contentType: 'application/pdf'
         }],
         function(err, info) {

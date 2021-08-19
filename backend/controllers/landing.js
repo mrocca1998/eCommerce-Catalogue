@@ -1,5 +1,5 @@
 const models = require('../models')
-let newsletter = require('../controllers/newsletter')
+let catalogue = require('../controllers/catalogue')
 var cron = require('node-cron');
 
 getDate = () => {
@@ -14,7 +14,7 @@ exports.get_landing = function (req, res, next) {
     res.render('landing', { queries: models.Query.findAll() });
     // cron.schedule('* * 12 * 6', () => {
     //     models.User.findOne().then(user => {
-    //         send_newsletter(user, getDate())
+    //         send_catalogue(user, getDate())
     //     })
     // });
 }
@@ -76,12 +76,12 @@ exports.edit_User = function (req, res, next) {
     })
 }
 
-exports.send_newsletter = function (req, res, next) {
+exports.send_catalogue = function (req, res, next) {
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
     date = year + '.' + month + '.' + day;
 
-    newsletter.generateNewsletter(req.params.user, getDate());
+    catalogue.generateCatalogue(req.params.user, getDate());
 }
