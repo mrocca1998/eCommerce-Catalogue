@@ -17,10 +17,11 @@ class App extends Component {
     super(props)
     this.state = {
       queries: [],
-      email: ""
+      user: ""
     }
     this.getQueries = this.getQueries.bind(this)
     this.refreshState = this.refreshState.bind(this)
+    this.updateUser = this.updateUser.bind(this)
   }
   
   async getQueries() {
@@ -35,9 +36,9 @@ class App extends Component {
     this.getQueries();
   }
 
-  updateEmail(email) {
+  updateUser(email) {
     this.setState({
-      email: email
+      user: email
     })
   }
 
@@ -49,11 +50,11 @@ class App extends Component {
     return (
       <div className="App">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"></link>
-        < ContactInfo updateEmail = {this.updateEmail}/>
+        < ContactInfo updateUser = {this.updateUser}/>
         {this.state.queries.length > 0 &&
           < Queries queries = {this.state.queries} refreshState = {this.refreshState}/>
         }
-        < QueryForm refreshState = {this.refreshState} />
+        < QueryForm user = {this.state.user} refreshState = {this.refreshState} />
       </div>
     );
   }

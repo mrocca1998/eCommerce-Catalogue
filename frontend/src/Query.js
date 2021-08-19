@@ -88,6 +88,7 @@ const Queries = (props) => {
       }
       this.putQuery = this.putQuery.bind(this)
       this.postQuery = this.postQuery.bind(this)
+      this.sendNewsletter = this.sendNewsletter.bind(this);
     }
   
     changeHandler = (event) => {
@@ -115,7 +116,7 @@ const Queries = (props) => {
     }
   
     async putQuery(event) {
-      event.preventDefault();
+      event.preventDefault()
       try {
           fetch('http://localhost:3000/Query/' + this.props.query.id + '/edit', {
               method: 'post',
@@ -132,7 +133,18 @@ const Queries = (props) => {
       } catch (e) {
           console.log(e)
       }
-      this.props.cancelEdit();
+      this.props.cancelEdit()
+    }
+
+    async sendNewsletter(event) {
+      event.preventDefault()
+      try {
+        fetch('http://localhost:3000/' + this.props.user + '/send', {
+          method: 'get'
+      })
+      } catch(e) {
+        console.log(e)
+      }
     }
   
     componentDidMount() {
@@ -169,7 +181,7 @@ const Queries = (props) => {
                                 }
                         </div>
                     </form>
-                    {!this.props.inTable ? <button class="btn btn-primary">Generate Newsletter</button> : <span/>}
+                    {!this.props.inTable ? <button class="btn btn-primary" onClick = {this.sendNewsletter}>Generate Newsletter</button> : <span/>}
                 </div>
             </div>
         </div>

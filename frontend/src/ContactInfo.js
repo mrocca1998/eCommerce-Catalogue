@@ -29,6 +29,7 @@ class ContactInfo extends Component {
           isEditing: !json,
           userExists: !!json
         })
+        this.props.updateUser(json.email)
       },
     )}
   
@@ -55,7 +56,7 @@ class ContactInfo extends Component {
           })
           .then(this.refreshState(), 
           this.setState({userExists: true, isEditing: false}),
-          this.props.updateEmail(this.state.email))
+          this.props.updateUser(this.state.email))
       } catch (e) {
           console.log(e)
       }
@@ -77,7 +78,7 @@ class ContactInfo extends Component {
           })
           .then(this.refreshState(),
           this.setState({isEditing: false}),
-          this.props.updateEmail(this.state.email))      
+          this.props.updateUser(this.state.email))      
       } catch (e) {
           console.log(e)
       }

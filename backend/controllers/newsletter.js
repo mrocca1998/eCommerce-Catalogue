@@ -3,7 +3,7 @@ var html_to_pdf = require('html-pdf-node');
 const models = require('../models')
 
 exports.generateNewsletter = async function (user, date) {
-    let html = '<p>hi</p><p>hey</p>'
+    let html = '<p>hi</p><p>hey</p><a href="https://www.w3schools.com">Click Me</a>'
     let file = { content: html, };
     let options = { path: './newsletters/' + user + date + '.pdf'}
 
@@ -28,7 +28,7 @@ function sendEmail(user, date) {
     });
     transporter.sendMail({
         from: 'ecommercethrowaway@gmail.com',
-        to: 'mrocca1998@gmail.com',
+        to: user,
         subject: 'eCommerce Newsletter',
         text: 'Attached is your custom newsletter. Happy shopping!',
         attachments: [{
