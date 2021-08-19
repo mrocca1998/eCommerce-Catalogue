@@ -44,6 +44,7 @@ class App extends Component {
 
   componentDidMount() {
     this.refreshState();
+    document.title = "eCommerce Catalogue"
   }
 
   render() {

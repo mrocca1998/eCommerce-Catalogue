@@ -4,7 +4,7 @@ const models = require('../models');
 const SerpApi = require('google-search-results-nodejs')
 
 exports.generateNewsletter = async function (user, date) {
-  let search = new SerpApi.GoogleSearch("insert key here")
+  let search = new SerpApi.GoogleSearch("enter key here")
   models.Query.findAll().then(queries => {
     let html = '<div style="text-align: center; font-family: Arial"><h1>HAPPY SHOPPING!</h1>'
     let j = 0

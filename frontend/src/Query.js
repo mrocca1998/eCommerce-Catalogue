@@ -181,7 +181,7 @@ const Queries = (props) => {
                                 }
                         </div>
                     </form>
-                    {!this.props.inTable ? <button class="btn btn-primary" onClick = {this.sendNewsletter}>Generate Newsletter</button> : <span/>}
+                    {!this.props.inTable ? <button class="btn btn-primary" onClick = {this.sendNewsletter}>Generate Catalogue</button> : <span/>}
                 </div>
             </div>
         </div>
